@@ -17,4 +17,10 @@ public class ZendeskAPI {
             return ZendeskAPI.getInstance();
         }
     }
+
+    public static void closeInstance(){
+        if(instance != null){
+            instance.close();
+        }
+    }
 }
