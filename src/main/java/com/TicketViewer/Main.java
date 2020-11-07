@@ -13,15 +13,15 @@ import java.util.Map;
 
 public class Main {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
         Zendesk zd = ZendeskSingleton.getInstance();
 
         String command = "curl https://{subdomain}.zendesk.com/api/v2/tickets/count.json -v -u {email_address}:{password}";
-        Process process = Runtime.getRuntime().exec(command);
+        //Process process = Runtime.getRuntime().exec(command);
 
         ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> jsonMap = mapper.readValue(process.getInputStream(), Map.class);
-        System.out.println(jsonMap);
+        //Map<String, Object> jsonMap = mapper.readValue(process.getInputStream(), Map.class);
+        //System.out.println(jsonMap);
 
         for(Ticket ticket : zd.getTickets()){
             System.out.println(ticket);
