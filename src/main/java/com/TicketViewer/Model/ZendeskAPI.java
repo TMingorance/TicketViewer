@@ -5,7 +5,7 @@ import org.zendesk.client.v2.Zendesk;
 public class ZendeskAPI {
     public static Zendesk instance = null;
 
-    public static Zendesk getInstance(){
+    public static Zendesk getInstance(){//TODO : gérer les erreurs
         if (ZendeskAPI.instance == null) {
             ZendeskAPI.instance = new Zendesk.Builder("https://enssat.zendesk.com")
                     .setUsername("tmingora@enssat.fr")
