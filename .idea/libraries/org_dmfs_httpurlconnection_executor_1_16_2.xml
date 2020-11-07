@@ -1,0 +1,30 @@
+<component name="libraryTable">
+  <library name="org.dmfs:httpurlconnection-executor:1.16.2" type="repository">
+    <properties maven-id="org.dmfs:httpurlconnection-executor:1.16.2" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/httpurlconnection-executor-1.16.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/http-client-essentials-1.16.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/optional-1.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jems-1.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/http-client-types-1.16.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/iterators-1.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/http-client-headers-1.16.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/http-client-basics-1.16.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/rfc3986-uri-0.8.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/http-executor-commons-1.16.2.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/lib/httpurlconnection-executor-1.16.2-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/http-client-essentials-1.16.2-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/optional-1.13-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jems-1.13-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/http-client-types-1.16.2-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/iterators-1.13-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/http-client-headers-1.16.2-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/http-client-basics-1.16.2-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/rfc3986-uri-0.8-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/http-executor-commons-1.16.2-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES />
+  </library>
+</component>
