@@ -5,26 +5,30 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.JsonSerializer;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializerProvider;
+import org.joda.time.chrono.StrictChronology;
 import org.zendesk.client.v2.Zendesk;
 import org.zendesk.client.v2.model.Ticket;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Map;
 
 public class Main {
 
-    public static void main(String[] args){
-        Zendesk zd = ZendeskSingleton.getInstance();
+    public static void main(String[] args) throws IOException {
 
-        String command = "curl https://{subdomain}.zendesk.com/api/v2/tickets/count.json -v -u {email_address}:{password}";
-        //Process process = Runtime.getRuntime().exec(command);
 
+        String command = "curl https://enssat.zendesk.com/api/v2/incremental/tickets/cursor.json?start_time=0 -u tmingora@enssat.fr:123456";
+        Process process = Runtime.getRuntime().exec(command);
+
+        InputStream inputStream = process.getInputStream();
         ObjectMapper mapper = new ObjectMapper();
-        //Map<String, Object> jsonMap = mapper.readValue(process.getInputStream(), Map.class);
-        //System.out.println(jsonMap);
+        Map<String, Object> jsonMap = mapper.readValue(inputStream, Map.class);
+        System.out.println(jsonMap.toString());
 
-        for(Ticket ticket : zd.getTickets()){
-            System.out.println(ticket);
-        }
+//        Zendesk zd = ZendeskSingleton.getInstance();
+//        for(Ticket ticket : zd.getTickets()){
+//            System.out.println(ticket);
+//        }
     }
 }
