@@ -20,7 +20,7 @@ public class Main {
 //        assert jsonMap != null;
 //        count = (int) jsonMap.get("count[value]");
 
-//        URL url = new URL("https://enssat.zendesk.com/api/v2/incremental/tickets/cursor.json?start_time=0");
+//        URL url = new URL("https://enssat.zendesk.com/api/v2/incremental/tickets.json?page[size]=25");
 //        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 //        connection.setRequestMethod("GET");
 //
@@ -29,6 +29,8 @@ public class Main {
 //        connection.connect();
 //
 //        System.out.println(connection.getResponseCode());
+//        System.out.println(connection.getResponseMessage());
+//        System.out.println(connection.getHeaderFields());
 //        InputStream inputStream = connection.getInputStream();
 //        System.out.println(52/25+1);
 //

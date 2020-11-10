@@ -5,7 +5,7 @@ import java.util.Map;
 
 public class TicketList {
     public static int TicketCount = -1;
-    public static ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+    public static ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>(); //Contains 25 tickets or less
     public static int numberOfPages = -1;
 
     public static int getTicketCount() {
