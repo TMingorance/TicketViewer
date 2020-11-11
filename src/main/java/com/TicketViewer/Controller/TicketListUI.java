@@ -50,17 +50,15 @@ public class TicketListUI{//TODO methods that parse entries
         else {//if it is not next, then it's prev
             jsonMap = HttpConnectionHandler.GETJSON(TicketList.getPrevPageUrl());
         }
-            TicketList.setList(new ArrayList<Map<String, Object>>((Collection<Map<String, Object>>) jsonMap.get("tickets")));
-            TicketList.setHasMore((boolean)((Map<String,Object>)jsonMap.get("meta")).get("has_more"));
-            TicketListDisplay.update();
-            TicketList.setPrevPageUrl((String)((Map<String,Object>)jsonMap.get("links")).get("prev"));
-            if(TicketList.isHasMore() == true){
-                TicketList.setPrevPageUrl((String)((Map<String,Object>)jsonMap.get("links")).get("next"));
-            }
-            else{
-                TicketList.setNextPageUrl("");
-            }
+        TicketList.setList(new ArrayList<Map<String, Object>>((Collection<Map<String, Object>>) jsonMap.get("tickets")));
+        TicketList.setHasMore((boolean)((Map<String,Object>)jsonMap.get("meta")).get("has_more"));
+        TicketListDisplay.update();
+        TicketList.setPrevPageUrl((String)((Map<String,Object>)jsonMap.get("links")).get("prev"));
+        if(TicketList.isHasMore() == true){
+            TicketList.setPrevPageUrl((String)((Map<String,Object>)jsonMap.get("links")).get("next"));
         }
-
+        else{
+            TicketList.setNextPageUrl("");
+        }
     }
 }
