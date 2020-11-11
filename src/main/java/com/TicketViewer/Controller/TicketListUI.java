@@ -19,7 +19,7 @@ public class TicketListUI{
     private ErrorDisplay errorDisplay;
     private TicketListDisplay ticketListDisplay;
     private TicketList ticketList;
-    private MainPage mainPage;
+
 
     private static volatile TicketListUI ticketListUI = new TicketListUI();
 
@@ -28,7 +28,6 @@ public class TicketListUI{
         this.errorDisplay = ErrorDisplay.getInstance();
         this.ticketListDisplay = TicketListDisplay.getInstance();
         this.ticketList = TicketList.getInstance();
-        this.mainPage = MainPage.getInstance();
     }
 
     public static TicketListUI getInstance(){

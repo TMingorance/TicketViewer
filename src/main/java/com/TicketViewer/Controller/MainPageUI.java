@@ -52,16 +52,4 @@ public class MainPageUI {
         }
     }
 
-    protected static void exitOrRestartOnInputError() {
-        Scanner scanner = new Scanner(System.in);
-        String input = scanner.nextLine();
-        if (input.equals("menu")){
-            mainPage.welcome();
-            MainPageUI.parseUserInput("");
-        }
-        else {
-            System.exit(-1);
-        }
-    }
-
 }
