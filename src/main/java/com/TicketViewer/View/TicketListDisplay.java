@@ -1,5 +1,6 @@
 package com.TicketViewer.View;
 
+import com.TicketViewer.Main;
 import com.TicketViewer.Model.TicketList;
 import org.zendesk.client.v2.model.Ticket;
 
@@ -40,11 +41,12 @@ public class TicketListDisplay {
         }
         System.out.println("Page " + currentPage + "/" + TicketList.getNumberOfPages() + "\n");
         if (currentPage <= 1){
-            System.out.println("Enter 'n' to go to the next page\n");
+            System.out.println("'n': next page\n");
         }
         else{
-            System.out.println("Enter 'n' to go to the next page or 'p' to go to the previous page\n");
+            System.out.println("'n': next page, 'p': previous page'\n");
         }
+        MainPage.quickMenu();
     }
 
     public static void update() throws IOException {

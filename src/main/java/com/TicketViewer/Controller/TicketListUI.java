@@ -24,7 +24,7 @@ public class TicketListUI{//TODO methods that parse entries
 
         int count = -1;
         assert jsonMap != null;
-        count = (int) jsonMap.get("count[value]"); //TODO vérifier si ça marche
+        count = (int) ((Map<String,Object>)jsonMap.get("count")).get("value");
         if(count >=0 ) {
             TicketList.setTicketCount(count);
         }
