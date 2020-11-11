@@ -9,6 +9,7 @@ public class ErrorManager {
 
     protected static void manageUnavailableAPIException(int errorCode){
         errorDisplay.unavailableAPIDisplay(errorCode);
+        MainPageUI.parseUserInput("");
     }
 
     protected static void manageError(String error){

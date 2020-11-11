@@ -61,7 +61,7 @@ public class TicketUI {
         try {
             jsonMap = httpConnectionHandler.GETJSON("https://enssat.zendesk.com/api/v2/tickets/" + id + ".json");
         } catch (IOException e) {
-            e.printStackTrace();
+            ErrorManager.manageError(e.getMessage());
         } catch (ResourceNotFoundException e) {
             ErrorManager.manageResourceNotFound();
         } catch (UnavailableAPIException e) {

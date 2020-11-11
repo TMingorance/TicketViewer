@@ -46,11 +46,11 @@ public class TicketListUI{
         try {
             jsonMap = httpConnectionHandler.GETJSON("https://enssat.zendesk.com/api/v2/tickets/count.json");
         } catch (IOException e) {
-            e.printStackTrace();
+            ErrorManager.manageError(e.getMessage());
         } catch (ResourceNotFoundException e) {
-            e.printStackTrace();
+            ErrorManager.manageUnavailableAPIException(e.getErrorCode());
         } catch (UnavailableAPIException e) {
-            e.printStackTrace();
+            ErrorManager.manageUnavailableAPIException(e.getErrorCode());
         }
 
         int count = -1;

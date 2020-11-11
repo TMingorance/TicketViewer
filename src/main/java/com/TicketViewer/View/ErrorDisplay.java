@@ -26,8 +26,8 @@ public class ErrorDisplay {
     }
 
     public void unavailableAPIDisplay(int errorCode){
-        System.out.println("Error : Zendesk API unavailable (Error code : "+ errorCode + ")\n" +
-                "Please enter 'menu' to restart or anything else to close the program"); //TODO manage this
+        System.out.println("Error : Zendesk API unavailable (Error code : "+ errorCode + ")");
+        mainPage.quickMenu();
     }
 
     public void resourceNotFound(){
@@ -36,8 +36,8 @@ public class ErrorDisplay {
     }
 
     public void errorDisplay(String error){
-        System.out.println("Oops ! An unexpected error has occured : \n" + error +
-                "\nPlease enter 'menu' to restart or anything else to close the program.\n"); //TODO manage this
+        System.out.println("Oops ! An unexpected error has occured : \n" + error);
+        mainPage.quickMenu();
     }
 
     public void wrongIdInput(){

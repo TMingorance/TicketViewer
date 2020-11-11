@@ -9,14 +9,12 @@ public class MainPageUI {
 
     private static TicketListUI ticketListUI;
     private static TicketUI ticketUI;
-    private static MainPage mainPage;
 
     private static volatile MainPageUI mainPageUI = new MainPageUI();
 
     private MainPageUI() {
         this.ticketListUI = TicketListUI.getInstance();
         this.ticketUI = TicketUI.getInstance();
-        this.mainPage = MainPage.getInstance();
     }
 
     public static MainPageUI getInstance(){

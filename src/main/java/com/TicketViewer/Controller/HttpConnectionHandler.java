@@ -17,14 +17,9 @@ import java.util.Scanner;
 
 public class HttpConnectionHandler {
 
-    private ErrorDisplay errorDisplay;
-    private MainPage mainPage;
-
     private static volatile HttpConnectionHandler httpConnectionHandler = new HttpConnectionHandler();
 
     private HttpConnectionHandler(){
-        this.errorDisplay = ErrorDisplay.getInstance();
-        this.mainPage = MainPage.getInstance();
     }
 
     public static HttpConnectionHandler getInstance(){
