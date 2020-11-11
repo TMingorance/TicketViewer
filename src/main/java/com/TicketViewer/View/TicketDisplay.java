@@ -10,6 +10,7 @@ public class TicketDisplay {
     public static void whichTicket(){
         System.out.println("Please enter the id of the ticket you want to examine.\n");
     }
+
     public static void display() throws IOException {//display all attributes
         Runtime.getRuntime().exec("cls");
         System.out.println("Id: " +JsonTicket.getTicket().get("id") + "\n" +
@@ -50,5 +51,6 @@ public class TicketDisplay {
                 "Channelback allowed? " + JsonTicket.getTicket().get("allow_channelback") + "\n" +
                 "Attachments allowed? " + JsonTicket.getTicket().get("allow_attachments") + "\n" +
                 "Public? " + JsonTicket.getTicket().get("is_public") + "\n\n");
+        MainPage.quickMenu();
     }
 }

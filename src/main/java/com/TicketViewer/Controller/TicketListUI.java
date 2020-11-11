@@ -17,7 +17,7 @@ import java.util.Map;
 public class TicketListUI{//TODO methods that parse entries
     //TODO method that retrieves the Tickets and the count of tickets (so HTTP request + convert into JSON)
 
-    private static void UpdateCount() throws IOException {//TODO check for HTTP codes : 200 is OK, the rest is errors
+    private static void updateCount() throws IOException {//TODO check for HTTP codes : 200 is OK, the rest is errors
 
         Map<String,Object> jsonMap = HttpConnectionHandler.GETJSON("https://enssat.zendesk.com/api/v2/tickets/count.json");
 
@@ -28,7 +28,7 @@ public class TicketListUI{//TODO methods that parse entries
             TicketList.setTicketCount(count);
         }
         else{
-            ErrorDisplay.errorDisplay("Ticket Count is negative.");
+            ErrorDisplay.errorDisplay("Ticket Count isn't right: its value is negative.");
             ErrorController.exitOnInputError();
         }
     }
@@ -39,8 +39,9 @@ public class TicketListUI{//TODO methods that parse entries
 
     public static void updateTicketList(boolean first, boolean next) throws IOException {//TODO gérer les pages
         Map<String, Object> jsonMap = null;
+        updateCount();
+        updateNumberOfPages();
         if(first) {
-            updateNumberOfPages();
             jsonMap = HttpConnectionHandler.GETJSON("https://enssat.zendesk.com/api/v2/incremental/tickets.json?page[size]=25");
         }
         else if(next){//if it is not first, then is it next or prev ?
