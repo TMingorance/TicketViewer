@@ -1,4 +1,4 @@
-package com.TicketViewer;
+package com.TicketViewer.Controller;
 
 import com.TicketViewer.Controller.HttpConnectionHandler;
 import com.TicketViewer.Controller.MainPageUI;
@@ -15,9 +15,13 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
 
-        HttpConnectionHandler.initConnection();
-        MainPage.welcome();
-        MainPageUI.parseUserInput("");
+        HttpConnectionHandler httpConnectionHandler = HttpConnectionHandler.getInstance();
+        httpConnectionHandler.initConnection();
+        MainPage mainPage = MainPage.getInstance();
+        MainPageUI mainPageUI = MainPageUI.getInstance();
+        mainPage.welcome();
+        mainPageUI.parseUserInput("");
+
 
 //        HttpConnectionHandler.initConnection();
 //        Map<String,Object> jsonMap = HttpConnectionHandler.GETJSON("https://enssat.zendesk.com/api/v2/tickets/count.json");

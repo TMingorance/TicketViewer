@@ -1,70 +1,87 @@
 package com.TicketViewer.Model;
 
+import com.TicketViewer.Controller.MainPageUI;
+
 import java.util.ArrayList;
 import java.util.Map;
 
 public class TicketList {
-    public static int TicketCount = -1;
-    public static ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>(); //Contains 25 tickets or less
-    public static int numberOfPages = -1;
-    public static int currentPage = 0;
-    public static boolean hasMore = false;
-    public static String prevPageUrl = "";
-    public static String nextPageUrl = "";
 
-    public static int getTicketCount() {
-        return TicketCount;
+    private static volatile TicketList ticketList = new TicketList();
+
+    private TicketList(){}
+
+    public static TicketList getInstance(){
+        if(ticketList != null) {
+            return ticketList;
+        }
+        else{
+            ticketList = new TicketList();
+            return ticketList;
+        }
     }
 
-    public static void setTicketCount(int ticketCount) {
-        TicketCount = ticketCount;
+    public int ticketCount = -1;
+    public ArrayList<Map<String, Object>> list = new ArrayList<Map<String, Object>>(); //Contains 25 tickets or less
+    public int numberOfPages = -1;
+    public int currentPage = 0;
+    public boolean hasMore = false;
+    public String prevPageUrl = "";
+    public String nextPageUrl = "";
+
+    public int getTicketCount() {
+        return ticketCount;
     }
 
-    public static ArrayList<Map<String, Object>> getList() {
+    public void setTicketCount(int ticketCount) {
+        this.ticketCount = ticketCount;
+    }
+
+    public ArrayList<Map<String, Object>> getList() {
         return list;
     }
 
-    public static void setList(ArrayList<Map<String, Object>> list) {
-        TicketList.list = list;
+    public void setList(ArrayList<Map<String, Object>> list) {
+        this.list = list;
     }
 
-    public static int getNumberOfPages() {
+    public int getNumberOfPages() {
         return numberOfPages;
     }
 
-    public static void setNumberOfPages(int numberOfPages) {
-        TicketList.numberOfPages = numberOfPages;
+    public void setNumberOfPages(int numberOfPages) {
+        this.numberOfPages = numberOfPages;
     }
 
-    public static boolean isHasMore() {
+    public boolean isHasMore() {
         return hasMore;
     }
 
-    public static void setHasMore(boolean hasMore) {
-        TicketList.hasMore = hasMore;
+    public void setHasMore(boolean hasMore) {
+        this.hasMore = hasMore;
     }
 
-    public static String getPrevPageUrl() {
+    public String getPrevPageUrl() {
         return prevPageUrl;
     }
 
-    public static void setPrevPageUrl(String prevPageUrl) {
-        TicketList.prevPageUrl = prevPageUrl;
+    public void setPrevPageUrl(String prevPageUrl) {
+        this.prevPageUrl = prevPageUrl;
     }
 
-    public static String getNextPageUrl() {
+    public String getNextPageUrl() {
         return nextPageUrl;
     }
 
-    public static void setNextPageUrl(String nextPageUrl) {
-        TicketList.nextPageUrl = nextPageUrl;
+    public void setNextPageUrl(String nextPageUrl) {
+        this.nextPageUrl = nextPageUrl;
     }
 
-    public static int getCurrentPage() {
+    public int getCurrentPage() {
         return currentPage;
     }
 
-    public static void setCurrentPage(int currentPage) {
-        TicketList.currentPage = currentPage;
+    public void setCurrentPage(int currentPage) {
+        this.currentPage = currentPage;
     }
 }

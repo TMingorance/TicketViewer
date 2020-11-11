@@ -1,23 +1,37 @@
 package com.TicketViewer.View;
 
-import com.TicketViewer.Controller.ErrorController;
-import com.TicketViewer.Main;
 import com.TicketViewer.Model.TicketList;
-import org.zendesk.client.v2.model.Ticket;
 
-import java.awt.*;
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Map;
 
 public class TicketListDisplay {
+
+    private MainPage mainPage;
+    private TicketList ticketList;
+
+    private static volatile TicketListDisplay ticketListDisplay = new TicketListDisplay();
+
+    private TicketListDisplay(){
+        this.mainPage = MainPage.getInstance();
+        this.ticketList = TicketList.getInstance();
+    }
+
+    public static TicketListDisplay getInstance(){
+        if(ticketListDisplay != null) {
+            return ticketListDisplay;
+        }
+        else{
+            ticketListDisplay = new TicketListDisplay();
+            return ticketListDisplay;
+        }
+    }
     //attributes displayed : id, type, subject, priority, status, created_at, updated_at
 
-    public static void display(){ //the list should contain 25 tickets or less
-        MainPage.clearScreen();
+    public void display(){ //the list should contain 25 tickets or less
+        mainPage.clearScreen();
         System.out.println("*** Ticket List ***\n" +
                 "   id   |  type  |       subject       |priority| status |     created at    |     updated at    |\n");
-        for(Map<String, Object> ticket : TicketList.getList()){
+        for(Map<String, Object> ticket : ticketList.getList()){
             String id = String.valueOf(ticket.get("id"));
             String type = String.valueOf(ticket.get("type"));
             String subject = String.valueOf(ticket.get("subject"));
@@ -42,32 +56,32 @@ public class TicketListDisplay {
             }
             System.out.println(id +"|"+ type + "|" + subject + "|" + priority + "|" + status + "|" + created_at + "|" + updated_at + "|");
         }
-        int currentPage = TicketList.getCurrentPage();
-        System.out.println("Page " + currentPage + "/" + TicketList.getNumberOfPages() + "\n");
-        pageCommandsIndications(currentPage);
-        MainPage.quickMenu();
+        int currentPage = ticketList.getCurrentPage();
+        System.out.println("Page " + currentPage + "/" + ticketList.getNumberOfPages() + "\n");
+        pageCommandsIndications();
+        mainPage.quickMenu();
     }
 
-    public static String pad(String string, int length){
+    private String pad(String string, int length){
         while(string.length()<length){
             string = string + " ";
         }
         return string;
     }
 
-    public static String formatDate(String date){
+    private String formatDate(String date){
         StringBuilder stringBuilder = new StringBuilder(date);
         stringBuilder.setCharAt(10, ' ');
         stringBuilder.deleteCharAt(19);
         return stringBuilder.toString();
     }
 
-    public static void pageCommandsIndications(int currentPage){
-        if (TicketList.isHasMore()){
-            System.out.println("'n': next page"); //TODO mettre un passage vers la dernière page à partir de la première ?
+    protected void pageCommandsIndications(){
+        if (ticketList.isHasMore()){
+            System.out.println("n: next page");
         }
-        if (currentPage > 1){
-            System.out.println("'p': previous page'");
+        if (ticketList.getCurrentPage() > 1){
+            System.out.println("p: previous page");
         }
         System.out.println("\n");
     }

@@ -1,10 +1,9 @@
 package com.TicketViewer.Exceptions;
 
-public class ResourceNotFoundException extends Exception{
-
+public class UnavailableAPIException extends Throwable {
     public int errorCode;
 
-    public ResourceNotFoundException(int errorCode){
+    public UnavailableAPIException(int errorCode){
         this.errorCode = errorCode;
     }
 

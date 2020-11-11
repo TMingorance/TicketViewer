@@ -1,15 +1,32 @@
 package com.TicketViewer.Model;
 
+import com.TicketViewer.Controller.MainPageUI;
+
 import java.util.Map;
 
 public class JsonTicket {
-    public static Map<String, Object> ticket = null;
 
-    public static Map<String, Object> getTicket() {
+    private static volatile JsonTicket jsonTicket = new JsonTicket();
+
+    private JsonTicket(){}
+
+    public static JsonTicket getInstance(){
+        if(jsonTicket != null) {
+            return jsonTicket;
+        }
+        else{
+            jsonTicket = new JsonTicket();
+            return jsonTicket;
+        }
+    }
+
+    public Map<String, Object> ticket = null;
+
+    public Map<String, Object> getTicket() {
         return ticket;
     }
 
-    public static void setTicket(Map<String, Object> ticket) {
-        JsonTicket.ticket = ticket;
+    public void setTicket(Map<String, Object> ticket) {
+        this.ticket = ticket;
     }
 }
