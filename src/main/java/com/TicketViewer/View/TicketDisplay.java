@@ -49,6 +49,6 @@ public class TicketDisplay {
                 "Brand id: " + JsonTicket.getTicket().get("brand_id") + "\n\n" +
                 "Channelback allowed? " + JsonTicket.getTicket().get("allow_channelback") + "\n" +
                 "Attachments allowed? " + JsonTicket.getTicket().get("allow_attachments") + "\n" +
-                "Public? " + JsonTicket.getTicket().get("is_public") + "\n");
+                "Public? " + JsonTicket.getTicket().get("is_public") + "\n\n");
     }
 }

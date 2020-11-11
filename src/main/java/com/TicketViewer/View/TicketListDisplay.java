@@ -40,12 +40,13 @@ public class TicketListDisplay {
             System.out.println(id +"|"+ type + "|" + subject + "|" + priority + "|" + status + "|" + created_at + "|" + updated_at + "|\n");
         }
         System.out.println("Page " + currentPage + "/" + TicketList.getNumberOfPages() + "\n");
-        if (currentPage <= 1){
-            System.out.println("'n': next page\n");
+        if (TicketList.isHasMore()){
+            System.out.println("'n': next page"); //TODO mettre un passage vers la dernière page à partir de la première ?
         }
-        else{
-            System.out.println("'n': next page, 'p': previous page'\n");
+        if (currentPage > 1){
+            System.out.println("'p': previous page'");
         }
+        System.out.println("\n");
         MainPage.quickMenu();
     }
 

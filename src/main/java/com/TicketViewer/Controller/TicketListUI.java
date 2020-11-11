@@ -17,7 +17,6 @@ import java.util.Map;
 public class TicketListUI{//TODO methods that parse entries
     //TODO method that retrieves the Tickets and the count of tickets (so HTTP request + convert into JSON)
 
-
     private static void UpdateCount() throws IOException {//TODO check for HTTP codes : 200 is OK, the rest is errors
 
         Map<String,Object> jsonMap = HttpConnectionHandler.GETJSON("https://enssat.zendesk.com/api/v2/tickets/count.json");
@@ -38,10 +37,29 @@ public class TicketListUI{//TODO methods that parse entries
         TicketList.setNumberOfPages(TicketList.getTicketCount()/25 +1);
     }
 
-    public static void updateTicketList() throws IOException {
-        Map<String, Object> jsonMap = HttpConnectionHandler.GETJSON("https://enssat.zendesk.com/api/v2/incremental/tickets.json?page[size]=25");
-        TicketList.setList(new ArrayList<Map<String,Object>>((Collection<Map<String, Object>>) jsonMap.get("tickets")));
-        TicketListDisplay.update();
-        //if(jsonMap.get("meta[has_more]"))
+    public static void updateTicketList(boolean first, boolean next) throws IOException {//TODO gérer les pages
+        Map<String, Object> jsonMap = null;
+        if(first) {
+            updateNumberOfPages();
+            jsonMap = HttpConnectionHandler.GETJSON("https://enssat.zendesk.com/api/v2/incremental/tickets.json?page[size]=25");
+        }
+        else if(next){//if it is not first, then is it next or prev ?
+            jsonMap = HttpConnectionHandler.GETJSON(TicketList.getNextPageUrl());
+        }
+        else {//if it is not next, then it's prev
+            jsonMap = HttpConnectionHandler.GETJSON(TicketList.getPrevPageUrl());
+        }
+            TicketList.setList(new ArrayList<Map<String, Object>>((Collection<Map<String, Object>>) jsonMap.get("tickets")));
+            TicketList.setHasMore((boolean)((Map<String,Object>)jsonMap.get("meta")).get("has_more"));
+            TicketListDisplay.update();
+            TicketList.setPrevPageUrl((String)((Map<String,Object>)jsonMap.get("links")).get("prev"));
+            if(TicketList.isHasMore() == true){
+                TicketList.setPrevPageUrl((String)((Map<String,Object>)jsonMap.get("links")).get("next"));
+            }
+            else{
+                TicketList.setNextPageUrl("");
+            }
+        }
+
     }
 }
