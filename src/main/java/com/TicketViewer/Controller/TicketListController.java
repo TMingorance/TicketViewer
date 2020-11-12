@@ -54,7 +54,7 @@ public class TicketListController {
 
         int count = -1;
         assert jsonMap != null;
-        count = (int) ((Map<String,Object>)jsonMap.get("count")).get("value");
+        count = (Integer) ((Map<String,Object>)jsonMap.get("count")).get("value");
         if(count >=0 ) {
             ticketList.setTicketCount(count);
         }
@@ -113,7 +113,7 @@ public class TicketListController {
             ticketList.setCurrentPage(ticketList.getCurrentPage() -1);
         }
         ticketList.setList(new ArrayList<Map<String, Object>>((Collection<Map<String, Object>>) jsonMap.get("tickets")));
-        ticketList.setHasMore((boolean)((Map<String,Object>)jsonMap.get("meta")).get("has_more"));
+        ticketList.setHasMore((Boolean) ((Map<String,Object>)jsonMap.get("meta")).get("has_more"));
         ticketListDisplay.display();
         ticketList.setPrevPageUrl((String)((Map<String,Object>)jsonMap.get("links")).get("prev"));
         if(ticketList.isHasMore() == true){

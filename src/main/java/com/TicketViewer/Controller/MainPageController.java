@@ -9,9 +9,9 @@ public class MainPageController {
 
     private static volatile MainPageController mainPageController = new MainPageController();
 
-    private MainPageController() {
-        this.ticketListController = TicketListController.getInstance();
-        this.ticketController = TicketController.getInstance();
+    protected MainPageController() {//protected instead of private for testing
+        ticketListController = TicketListController.getInstance();
+        ticketController = TicketController.getInstance();
     }
 
     public static MainPageController getInstance(){
