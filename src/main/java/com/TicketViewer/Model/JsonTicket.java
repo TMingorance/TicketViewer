@@ -1,7 +1,5 @@
 package com.TicketViewer.Model;
 
-import com.TicketViewer.Controller.MainPageUI;
-
 import java.util.Map;
 
 public class JsonTicket {

@@ -4,36 +4,35 @@ import com.TicketViewer.Exceptions.ResourceNotFoundException;
 import com.TicketViewer.Exceptions.UnavailableAPIException;
 import com.TicketViewer.Model.JsonTicket;
 import com.TicketViewer.View.ErrorDisplay;
-import com.TicketViewer.View.MainPage;
 import com.TicketViewer.View.TicketDisplay;
 
 import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
 
-public class TicketUI {
+public class TicketController {
 
     private HttpConnectionHandler httpConnectionHandler;
     private JsonTicket jsonTicket;
     private TicketDisplay ticketDisplay;
     private ErrorDisplay errorDisplay;
 
-    private static volatile TicketUI ticketUI = new TicketUI();
+    private static volatile TicketController ticketController = new TicketController();
 
-    private TicketUI(){
+    private TicketController(){
         this.httpConnectionHandler = HttpConnectionHandler.getInstance();
         this.jsonTicket = JsonTicket.getInstance();
         this.ticketDisplay = TicketDisplay.getInstance();
         this.errorDisplay = ErrorDisplay.getInstance();
     }
 
-    public static TicketUI getInstance(){
-        if(ticketUI != null) {
-            return ticketUI;
+    public static TicketController getInstance(){
+        if(ticketController != null) {
+            return ticketController;
         }
         else{
-            ticketUI = new TicketUI();
-            return ticketUI;
+            ticketController = new TicketController();
+            return ticketController;
         }
     }
 
@@ -52,8 +51,8 @@ public class TicketUI {
         catch(NumberFormatException e){
             wrongIdInput();
         }
-        ticketUI.updateTicketDetails(id);
-        MainPageUI.parseUserInput("");
+        ticketController.updateTicketDetails(id);
+        MainPageController.parseUserInput("");
     }
 
     public void updateTicketDetails (int id){
@@ -73,7 +72,7 @@ public class TicketUI {
 
     private void wrongIdInput(){
         errorDisplay.wrongIdInput();
-        MainPageUI.parseUserInput("");
+        MainPageController.parseUserInput("");
     }
 
 

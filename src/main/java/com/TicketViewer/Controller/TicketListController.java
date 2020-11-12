@@ -4,7 +4,6 @@ import com.TicketViewer.Exceptions.ResourceNotFoundException;
 import com.TicketViewer.Exceptions.UnavailableAPIException;
 import com.TicketViewer.Model.TicketList;
 import com.TicketViewer.View.ErrorDisplay;
-import com.TicketViewer.View.MainPage;
 import com.TicketViewer.View.TicketListDisplay;
 
 import java.io.IOException;
@@ -13,7 +12,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Scanner;
 
-public class TicketListUI{
+public class TicketListController {
 
     private HttpConnectionHandler httpConnectionHandler;
     private ErrorDisplay errorDisplay;
@@ -21,22 +20,22 @@ public class TicketListUI{
     private TicketList ticketList;
 
 
-    private static volatile TicketListUI ticketListUI = new TicketListUI();
+    private static volatile TicketListController ticketListController = new TicketListController();
 
-    private TicketListUI() {
+    private TicketListController() {
         this.httpConnectionHandler = HttpConnectionHandler.getInstance();
         this.errorDisplay = ErrorDisplay.getInstance();
         this.ticketListDisplay = TicketListDisplay.getInstance();
         this.ticketList = TicketList.getInstance();
     }
 
-    public static TicketListUI getInstance(){
-        if(ticketListUI != null) {
-            return ticketListUI;
+    public static TicketListController getInstance(){
+        if(ticketListController != null) {
+            return ticketListController;
         }
         else{
-            ticketListUI = new TicketListUI();
-            return ticketListUI;
+            ticketListController = new TicketListController();
+            return ticketListController;
         }
     }
 
@@ -147,12 +146,12 @@ public class TicketListUI{
             }
         }
         else{
-            MainPageUI.parseUserInput(input);
+            MainPageController.parseUserInput(input);
         }
     }
     private void wrongInputPageMenu(){
         errorDisplay.wrongInputPageMenu();
-        ticketListUI.parseUserInput();
+        ticketListController.parseUserInput();
     }
 
 }

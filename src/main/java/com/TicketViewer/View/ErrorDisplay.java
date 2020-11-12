@@ -1,8 +1,5 @@
 package com.TicketViewer.View;
 
-import com.TicketViewer.Controller.MainPageUI;
-import com.TicketViewer.Model.TicketList;
-
 public class ErrorDisplay {
 
     private MainPage mainPage;

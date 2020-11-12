@@ -1,7 +1,6 @@
 package com.TicketViewer.Controller;
 
 import com.TicketViewer.View.ErrorDisplay;
-import com.TicketViewer.View.MainPage;
 
 public class ErrorManager {
 
@@ -9,22 +8,22 @@ public class ErrorManager {
 
     protected static void manageUnavailableAPIException(int errorCode){
         errorDisplay.unavailableAPIDisplay(errorCode);
-        MainPageUI.parseUserInput("");
+        MainPageController.parseUserInput("");
     }
 
     protected static void manageError(String error){
         errorDisplay.errorDisplay(error);
-        MainPageUI.parseUserInput("");
+        MainPageController.parseUserInput("");
     }
 
     protected static void wrongInputMainMenu(){
         errorDisplay.wrongInputMainMenu();
-        MainPageUI.parseUserInput("");
+        MainPageController.parseUserInput("");
     }
 
     protected static void manageResourceNotFound(){
         errorDisplay.resourceNotFound();
-        MainPageUI.parseUserInput("");
+        MainPageController.parseUserInput("");
     }
 
 }
