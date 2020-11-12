@@ -1,6 +1,7 @@
 package com.TicketViewer.Controller;
 
 import com.TicketViewer.Model.TicketList;
+import com.TicketViewer.View.ErrorDisplay;
 import com.TicketViewer.View.MainPage;
 
 import java.util.Scanner;
@@ -10,13 +11,15 @@ public class MainPageController implements Controller{
     private TicketListController ticketListController;
     private TicketController ticketController;
     private MainPage mainPage;
+    private ErrorManager errorManager;
 
     private static volatile MainPageController mainPageController = new MainPageController();
 
-    protected MainPageController() {//protected instead of private for testing
+    private MainPageController() {
         this.ticketListController = TicketListController.getInstance();
         this.ticketController = TicketController.getInstance();
         this.mainPage = MainPage.getInstance();
+        this.errorManager = ErrorManager.getInstance();
     }
 
     public static MainPageController getInstance(){
@@ -30,7 +33,7 @@ public class MainPageController implements Controller{
     }
 
     public void control(String command) {
-        if(command == ""){
+        if(command.equals("")){
             mainPage.quickMenu();
             parseUserInput("");
         }
@@ -60,7 +63,7 @@ public class MainPageController implements Controller{
             System.exit(0);
         }
         else{
-            ErrorManager.wrongInputMainMenu();
+            errorManager.wrongInputMainMenu();
         }
     }
 

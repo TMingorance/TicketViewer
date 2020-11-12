@@ -18,14 +18,23 @@ public class TicketListController implements Controller{
     private HttpConnectionHandler httpConnectionHandler;
     private TicketListDisplay ticketListDisplay;
     private TicketList ticketList;
+    private ErrorManager errorManager;
 
 
     private static volatile TicketListController ticketListController = new TicketListController();
 
-    private TicketListController() {
+    public TicketListController() {//public for testing
         this.httpConnectionHandler = HttpConnectionHandler.getInstance();
         this.ticketListDisplay = TicketListDisplay.getInstance();
         this.ticketList = TicketList.getInstance();
+        this.errorManager = ErrorManager.getInstance();
+    }
+
+    public TicketListController(HttpConnectionHandler httpConnectionHandler, TicketListDisplay ticketListDisplay, TicketList ticketList, ErrorManager errorManager){
+        this.httpConnectionHandler = httpConnectionHandler;
+        this.ticketListDisplay = ticketListDisplay;
+        this.ticketList = ticketList;
+        this.errorManager = errorManager;
     }
 
     public static TicketListController getInstance(){
@@ -40,34 +49,37 @@ public class TicketListController implements Controller{
 
     public void control(String command) {
         if(command == "") {
-            prepareList();
+            String input = prepareList();
+            MainController.setController(MainPageController.getInstance());
+            MainController.run(input);
         }
         if(command == "page error recover"){
-            parseUserInput();
+            String input = parseUserInput();
+            MainController.setController(MainPageController.getInstance());
+            MainController.run(input);
         }
     }
 
-    private void updateCount() {
+    protected void updateCount() {
 
         Map<String,Object> jsonMap = null;
         try {
             jsonMap = httpConnectionHandler.GETJSON("https://enssat.zendesk.com/api/v2/tickets/count.json");
         } catch (IOException e) {
-            ErrorManager.manageError(e.getMessage());
+            errorManager.manageError(e.getMessage());
         } catch (ResourceNotFoundException e) {
-            ErrorManager.manageUnavailableAPIException(e.getErrorCode());
+            errorManager.manageUnavailableAPIException(e.getErrorCode());
         } catch (UnavailableAPIException e) {
-            ErrorManager.manageUnavailableAPIException(e.getErrorCode());
+            errorManager.manageUnavailableAPIException(e.getErrorCode());
         }
 
         int count = -1;
-        assert jsonMap != null;
         count = ((Integer) ((Map<String,Object>)jsonMap.get("count")).get("value")).intValue();
         if(count >=0 ) {
             ticketList.setTicketCount(count);
         }
         else{
-            ErrorManager.manageError("Ticket Count isn't right: its value is negative.");
+            errorManager.manageError("Ticket Count isn't right: its value is negative.");
         }
     }
 
@@ -75,12 +87,13 @@ public class TicketListController implements Controller{
         ticketList.setNumberOfPages(ticketList.getTicketCount()/25 +1);
     }
 
-    public void prepareList(){
+    public String prepareList(){//public for testing
         updateTicketList(true, false);
-        parseUserInput();
+        String input = parseUserInput();
+        return input;
     }
 
-    private void updateTicketList(boolean first, boolean next){//if first is true, next isn't considered
+    protected void updateTicketList(boolean first, boolean next){//if first is true, next isn't considered
         Map<String, Object> jsonMap = null;
         updateCount();
         updateNumberOfPages();
@@ -88,11 +101,11 @@ public class TicketListController implements Controller{
             try {
                 jsonMap = httpConnectionHandler.GETJSON("https://enssat.zendesk.com/api/v2/tickets.json?page[size]=25");
             } catch (IOException e) {
-                ErrorManager.manageError(e.getMessage());
+                errorManager.manageError(e.getMessage());
             } catch (ResourceNotFoundException e) {
-                ErrorManager.manageUnavailableAPIException(e.errorCode);
+                errorManager.manageUnavailableAPIException(e.errorCode);
             } catch (UnavailableAPIException e) {
-                ErrorManager.manageUnavailableAPIException(e.errorCode);
+                errorManager.manageUnavailableAPIException(e.errorCode);
             }
             ticketList.setCurrentPage(1);
         }
@@ -100,11 +113,11 @@ public class TicketListController implements Controller{
             try {
                 jsonMap = httpConnectionHandler.GETJSON(ticketList.getNextPageUrl());
             } catch (IOException e) {
-                ErrorManager.manageError(e.getMessage());
+                errorManager.manageError(e.getMessage());
             } catch (ResourceNotFoundException e) {
-                ErrorManager.manageUnavailableAPIException(e.getErrorCode());
+                errorManager.manageUnavailableAPIException(e.getErrorCode());
             } catch (UnavailableAPIException e) {
-                ErrorManager.manageUnavailableAPIException(e.getErrorCode());
+                errorManager.manageUnavailableAPIException(e.getErrorCode());
             }
             ticketList.setCurrentPage(ticketList.getCurrentPage() + 1);
         }
@@ -112,11 +125,11 @@ public class TicketListController implements Controller{
             try {
                 jsonMap = httpConnectionHandler.GETJSON(ticketList.getPrevPageUrl());
             } catch (IOException e) {
-                ErrorManager.manageError(e.getMessage());
+                errorManager.manageError(e.getMessage());
             } catch (ResourceNotFoundException e) {
-                ErrorManager.manageUnavailableAPIException(e.getErrorCode());
+                errorManager.manageUnavailableAPIException(e.getErrorCode());
             } catch (UnavailableAPIException e) {
-                ErrorManager.manageUnavailableAPIException(e.getErrorCode());
+                errorManager.manageUnavailableAPIException(e.getErrorCode());
             }
             ticketList.setCurrentPage(ticketList.getCurrentPage() -1);
         }
@@ -132,7 +145,7 @@ public class TicketListController implements Controller{
         }
     }
 
-    private void parseUserInput(){
+    private String parseUserInput(){
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         if(input.equals("n")){
@@ -141,7 +154,7 @@ public class TicketListController implements Controller{
                 parseUserInput();
             }
             else {
-                ErrorManager.wrongInputPageMenu();
+                errorManager.wrongInputPageMenu();
             }
         }
         else if(input.equals("p")){
@@ -150,13 +163,10 @@ public class TicketListController implements Controller{
                 parseUserInput();
             }
             else{
-                ErrorManager.wrongInputPageMenu();
+                errorManager.wrongInputPageMenu();
             }
         }
-        else{
-            MainController.setController(MainPageController.getInstance());
-            MainController.run(input);
-        }
+            return input;
     }
 
 }

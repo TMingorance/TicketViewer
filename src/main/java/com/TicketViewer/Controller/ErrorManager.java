@@ -5,39 +5,52 @@ import com.TicketViewer.View.MainPage;
 
 public class ErrorManager {
 
-    private static ErrorDisplay errorDisplay = ErrorDisplay.getInstance();
-    private static MainPageController mainPageController = MainPageController.getInstance();
+    private static ErrorManager errorManager;
 
-    protected static void manageUnavailableAPIException(int errorCode){
+    private ErrorManager(){}
+
+    public static ErrorManager getInstance(){
+        if(errorManager != null) {
+            return errorManager;
+        }
+        else{
+            errorManager = new ErrorManager();
+            return errorManager;
+        }
+    }
+
+    private ErrorDisplay errorDisplay = ErrorDisplay.getInstance();
+
+    protected void manageUnavailableAPIException(int errorCode){
         errorDisplay.unavailableAPIDisplay(errorCode);
         MainController.setController(MainPageController.getInstance());
         MainController.run("");
     }
 
-    protected static void manageError(String error){
+    protected void manageError(String error){
         errorDisplay.errorDisplay(error);
         MainController.setController(MainPageController.getInstance());
         MainController.run("");
     }
 
-    protected static void wrongInputMainMenu(){
+    protected void wrongInputMainMenu(){
         errorDisplay.wrongInputMainMenu();
         MainController.setController(MainPageController.getInstance());
         MainController.run("");
     }
 
-    protected static void manageResourceNotFound(){
+    protected void manageResourceNotFound(){
         errorDisplay.resourceNotFound();
         MainController.setController(MainPageController.getInstance());
         MainController.run("");
     }
 
-    protected static void wrongInputPageMenu(){
+    protected void wrongInputPageMenu(){
         errorDisplay.wrongInputPageMenu();
         MainController.run("page error recover");
     }
 
-    protected static void wrongIdInput(){
+    protected void wrongIdInput(){
         errorDisplay.wrongIdInput();
         MainController.setController(MainPageController.getInstance());
         MainController.run("");

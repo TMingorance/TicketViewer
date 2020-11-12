@@ -15,16 +15,25 @@ public class TicketController implements Controller{
     private HttpConnectionHandler httpConnectionHandler;
     private JsonTicket jsonTicket;
     private TicketDisplay ticketDisplay;
+    private ErrorManager errorManager;
 
-    private static volatile TicketController ticketController = new TicketController();
+    private static TicketController ticketController = new TicketController();
 
     private TicketController(){
         this.httpConnectionHandler = HttpConnectionHandler.getInstance();
         this.jsonTicket = JsonTicket.getInstance();
         this.ticketDisplay = TicketDisplay.getInstance();
+        this.errorManager = ErrorManager.getInstance();
     }
 
-    public TicketController(int forTest){} //Public constructor for running tests
+    public TicketController(HttpConnectionHandler httpConnectionHandler, JsonTicket jsonTicket, TicketDisplay ticketDisplay, ErrorManager errorManager) {
+        this.httpConnectionHandler = httpConnectionHandler;
+        this.jsonTicket = jsonTicket;
+        this.ticketDisplay = ticketDisplay;
+        this.errorManager = errorManager;
+    }
+
+    //Public constructor for running tests
 
     public static TicketController getInstance(){
         if(ticketController != null) {
@@ -55,9 +64,9 @@ public class TicketController implements Controller{
             id = Integer.parseInt(input);
         }
         catch(NumberFormatException e){
-            ErrorManager.wrongIdInput();
+            errorManager.wrongIdInput();
         }
-        ticketController.updateTicketDetails(id);
+        updateTicketDetails(id);
     }
 
     private void updateTicketDetails (int id){
@@ -65,11 +74,11 @@ public class TicketController implements Controller{
         try {
             jsonMap = httpConnectionHandler.GETJSON("https://enssat.zendesk.com/api/v2/tickets/" + id + ".json");
         } catch (IOException e) {
-            ErrorManager.manageError(e.getMessage());
+            errorManager.manageError(e.getMessage());
         } catch (ResourceNotFoundException e) {
-            ErrorManager.manageResourceNotFound();
+            errorManager.manageResourceNotFound();
         } catch (UnavailableAPIException e) {
-            ErrorManager.manageUnavailableAPIException(e.getErrorCode());
+            errorManager.manageUnavailableAPIException(e.getErrorCode());
         }
         jsonTicket.setTicket(jsonMap);
         ticketDisplay.display();

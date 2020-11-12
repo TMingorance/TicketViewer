@@ -4,14 +4,14 @@ import com.TicketViewer.Exceptions.ResourceNotFoundException;
 import com.TicketViewer.Exceptions.UnavailableAPIException;
 import com.TicketViewer.Model.TicketList;
 import com.TicketViewer.View.ErrorDisplay;
+import com.TicketViewer.View.MainPage;
 import com.TicketViewer.View.TicketListDisplay;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.ArgumentMatcher;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
+import org.mockito.*;
 import org.mockito.junit.MockitoJUnitRunner;
 import org.mockito.junit.jupiter.MockitoExtension;
 
@@ -22,41 +22,52 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class TicketListControllerTest {
 
-    private static HttpConnectionHandler staticHttpConnectionHandler = HttpConnectionHandler.getInstance();
-
     private HttpConnectionHandler httpConnectionHandler = HttpConnectionHandler.getInstance();
 
     @Mock
-    private ErrorDisplay errorDisplay;
+    private MainPageController mainPageController;
 
     @Mock
     private TicketListDisplay ticketListDisplay;
 
-    @Mock
+    @Spy
     private TicketList ticketList;
+
+    @Mock
+    private ErrorManager errorManager;
 
     @InjectMocks
     private TicketListController ticketListController;
 
-    @BeforeAll
-    public static void prepareTests(){
-        staticHttpConnectionHandler.initConnection();
+    @BeforeEach
+    public void prepareTests(){
+        httpConnectionHandler.initConnection();
+        ticketListController = new TicketListController(httpConnectionHandler,ticketListDisplay,ticketList,errorManager);
     }
 
     @Test
-    void prepareList() throws ResourceNotFoundException, IOException, UnavailableAPIException {
+    public void prepareListTestHappyPath() {
         Mockito.when(ticketList.isHasMore()).thenReturn(true);
-        System.setIn(new ByteArrayInputStream("exit\n\n".getBytes()));
+        System.setIn(new ByteArrayInputStream("\n\n".getBytes()));
+
         ticketListController.prepareList();
-        Mockito.verify(httpConnectionHandler,Mockito.times(2)).GETJSON(Mockito.anyString());
-        Mockito.verify(ticketList).setTicketCount(Mockito.anyInt());
-        Mockito.verify(ticketList).setNumberOfPages(Mockito.anyInt());
-        Mockito.verify(ticketList).getTicketCount();
-        Mockito.verify(ticketList).setCurrentPage(Mockito.anyInt());
+
+        Assertions.assertNotNull(ticketList.getTicketCount());
+        Assertions.assertNotNull(ticketList.getCurrentPage());
+        Assertions.assertNotNull(ticketList.getNumberOfPages());
+        Assertions.assertNotNull(ticketList.getPrevPageUrl());
+        Assertions.assertNotNull(ticketList.getNextPageUrl());
+
+        Assertions.assertTrue(ticketList.getTicketCount() != -1);
+        Assertions.assertTrue(ticketList.getCurrentPage() != 0);
+        Assertions.assertTrue(ticketList.getNumberOfPages() != -1);
+        Assertions.assertTrue(ticketList.getNextPageUrl() != "");
+
         Mockito.verify(ticketList).setHasMore(Mockito.anyBoolean());
         Mockito.verify(ticketListDisplay).display();
         Mockito.verify(ticketList).setPrevPageUrl(Mockito.anyString());
         Mockito.verify(ticketList).isHasMore();
-        Mockito.verify(ticketList).setNextPageUrl(Mockito.anyString());
+
     }
+
 }

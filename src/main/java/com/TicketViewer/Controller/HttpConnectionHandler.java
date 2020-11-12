@@ -17,7 +17,7 @@ import java.util.Scanner;
 
 public class HttpConnectionHandler {
 
-    private static volatile HttpConnectionHandler httpConnectionHandler = new HttpConnectionHandler();
+    private static HttpConnectionHandler httpConnectionHandler = new HttpConnectionHandler();
 
     private HttpConnectionHandler(){
     }
