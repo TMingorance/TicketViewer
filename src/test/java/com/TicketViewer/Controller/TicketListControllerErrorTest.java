@@ -52,7 +52,7 @@ class TicketListControllerErrorTest extends TicketListController{
 
     @BeforeEach
     public void prepareTests() throws ResourceNotFoundException, IOException, UnavailableAPIException {
-        Mockito.doAnswer().when(errorManager).manageError((new IOException()).getMessage());
+        Mockito.doNothing().when(errorManager).manageError((new IOException()).getMessage());
         Mockito.doNothing().when(errorManager).manageResourceNotFound();
         Mockito.doNothing().when(errorManager).manageUnavailableAPIException(Mockito.eq(403));
     }
