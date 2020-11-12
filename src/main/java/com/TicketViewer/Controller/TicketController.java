@@ -26,14 +26,13 @@ public class TicketController implements Controller{
         this.errorManager = ErrorManager.getInstance();
     }
 
-    public TicketController(HttpConnectionHandler httpConnectionHandler, JsonTicket jsonTicket, TicketDisplay ticketDisplay, ErrorManager errorManager) {
+    public TicketController(HttpConnectionHandler httpConnectionHandler, JsonTicket jsonTicket, TicketDisplay ticketDisplay, ErrorManager errorManager) {//Public constructor for running tests
         this.httpConnectionHandler = httpConnectionHandler;
         this.jsonTicket = jsonTicket;
         this.ticketDisplay = ticketDisplay;
         this.errorManager = errorManager;
     }
 
-    //Public constructor for running tests
 
     public static TicketController getInstance(){
         if(ticketController != null) {
