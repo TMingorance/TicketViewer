@@ -1,17 +1,22 @@
 package com.TicketViewer.Controller;
 
+import com.TicketViewer.Model.TicketList;
+import com.TicketViewer.View.MainPage;
+
 import java.util.Scanner;
 
-public class MainPageController {
+public class MainPageController implements Controller{
 
-    private static TicketListController ticketListController;
-    private static TicketController ticketController;
+    private TicketListController ticketListController;
+    private TicketController ticketController;
+    private MainPage mainPage;
 
     private static volatile MainPageController mainPageController = new MainPageController();
 
     protected MainPageController() {//protected instead of private for testing
-        ticketListController = TicketListController.getInstance();
-        ticketController = TicketController.getInstance();
+        this.ticketListController = TicketListController.getInstance();
+        this.ticketController = TicketController.getInstance();
+        this.mainPage = MainPage.getInstance();
     }
 
     public static MainPageController getInstance(){
@@ -24,7 +29,17 @@ public class MainPageController {
         }
     }
 
-    protected static void parseUserInput(String userInput) {
+    public void control(String command) {
+        if(command == ""){
+            mainPage.quickMenu();
+            parseUserInput("");
+        }
+        else {
+            parseUserInput(command);
+        }
+    }
+
+    protected void parseUserInput(String userInput) {
         String input = "";
         Scanner scanner = new Scanner(System.in);
         if(userInput.equals("")) {
@@ -34,10 +49,12 @@ public class MainPageController {
             input = userInput;
         }
         if(input.equals("a")){
-            ticketListController.prepareList();
+            MainController.setController(TicketListController.getInstance());
+            MainController.run("");
         }
         else if(input.equals("d")){
-            ticketController.whichTicket();
+            MainController.setController(TicketController.getInstance());
+            MainController.run("");
         }
         else if(input.equals("exit")){
             System.exit(0);
@@ -46,5 +63,6 @@ public class MainPageController {
             ErrorManager.wrongInputMainMenu();
         }
     }
+
 
 }

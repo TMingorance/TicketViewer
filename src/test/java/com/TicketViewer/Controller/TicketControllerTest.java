@@ -42,8 +42,6 @@ class TicketControllerTest {
     @Test
     void whichTicketTestHappyPath() throws ResourceNotFoundException, IOException, UnavailableAPIException {
         System.setIn(new ByteArrayInputStream("1\n\n".getBytes()));
-
-        Mockito.
         httpConnectionHandler.initConnection();
         ticketController.whichTicket();
         Mockito.verify(ticketDisplay).whichTicket();

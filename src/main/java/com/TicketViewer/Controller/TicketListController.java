@@ -4,6 +4,7 @@ import com.TicketViewer.Exceptions.ResourceNotFoundException;
 import com.TicketViewer.Exceptions.UnavailableAPIException;
 import com.TicketViewer.Model.TicketList;
 import com.TicketViewer.View.ErrorDisplay;
+import com.TicketViewer.View.MainPage;
 import com.TicketViewer.View.TicketListDisplay;
 
 import java.io.IOException;
@@ -12,10 +13,9 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Scanner;
 
-public class TicketListController {
+public class TicketListController implements Controller{
 
     private HttpConnectionHandler httpConnectionHandler;
-    private ErrorDisplay errorDisplay;
     private TicketListDisplay ticketListDisplay;
     private TicketList ticketList;
 
@@ -24,7 +24,6 @@ public class TicketListController {
 
     private TicketListController() {
         this.httpConnectionHandler = HttpConnectionHandler.getInstance();
-        this.errorDisplay = ErrorDisplay.getInstance();
         this.ticketListDisplay = TicketListDisplay.getInstance();
         this.ticketList = TicketList.getInstance();
     }
@@ -36,6 +35,15 @@ public class TicketListController {
         else{
             ticketListController = new TicketListController();
             return ticketListController;
+        }
+    }
+
+    public void control(String command) {
+        if(command == "") {
+            prepareList();
+        }
+        if(command == "page error recover"){
+            parseUserInput();
         }
     }
 
@@ -133,7 +141,7 @@ public class TicketListController {
                 parseUserInput();
             }
             else {
-                wrongInputPageMenu();
+                ErrorManager.wrongInputPageMenu();
             }
         }
         else if(input.equals("p")){
@@ -142,16 +150,13 @@ public class TicketListController {
                 parseUserInput();
             }
             else{
-                wrongInputPageMenu();
+                ErrorManager.wrongInputPageMenu();
             }
         }
         else{
-            MainPageController.parseUserInput(input);
+            MainController.setController(MainPageController.getInstance());
+            MainController.run(input);
         }
-    }
-    private void wrongInputPageMenu(){
-        errorDisplay.wrongInputPageMenu();
-        parseUserInput();
     }
 
 }

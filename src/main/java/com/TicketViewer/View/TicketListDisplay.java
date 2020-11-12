@@ -1,18 +1,17 @@
 package com.TicketViewer.View;
 
+import com.TicketViewer.Controller.Main;
 import com.TicketViewer.Model.TicketList;
 
 import java.util.Map;
 
 public class TicketListDisplay {
 
-    private MainPage mainPage;
     private TicketList ticketList;
 
     private static volatile TicketListDisplay ticketListDisplay = new TicketListDisplay();
 
     private TicketListDisplay(){
-        this.mainPage = MainPage.getInstance();
         this.ticketList = TicketList.getInstance();
     }
 
@@ -28,7 +27,7 @@ public class TicketListDisplay {
     //attributes displayed : id, type, subject, priority, status, created_at, updated_at
 
     public void display(){ //the list should contain 25 tickets or less
-        mainPage.clearScreen();
+        Utilities.clearScreen();
         System.out.println("*** Ticket List ***\n" +
                 "   id   |  type  |       subject       |priority| status |     created at    |     updated at    |\n");
         for(Map<String, Object> ticket : ticketList.getList()){
@@ -59,7 +58,7 @@ public class TicketListDisplay {
         int currentPage = ticketList.getCurrentPage();
         System.out.println("Page " + currentPage + "/" + ticketList.getNumberOfPages() + "\n");
         pageCommandsIndications();
-        mainPage.quickMenu();
+        MainPage.quickMenu();
     }
 
     private String pad(String string, int length){
@@ -83,6 +82,5 @@ public class TicketListDisplay {
         if (ticketList.getCurrentPage() > 1){
             System.out.println("p: previous page");
         }
-        System.out.println("\n");
     }
 }

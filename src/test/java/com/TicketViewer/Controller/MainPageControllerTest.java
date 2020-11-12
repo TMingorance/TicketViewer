@@ -37,11 +37,11 @@ class MainPageControllerTest {
 
         System.setIn(new ByteArrayInputStream("a\n".getBytes()));
 
-        MainPageController.parseUserInput("");
+        mainPageController.parseUserInput("");
         Mockito.verify(ticketListController).prepareList();
 
         System.setIn(new ByteArrayInputStream("d\n".getBytes()));
-        MainPageController.parseUserInput("");
+        mainPageController.parseUserInput("");
         Mockito.verify(ticketController).whichTicket();
 
         //Test that System.exit(0) is called (tricky to do)

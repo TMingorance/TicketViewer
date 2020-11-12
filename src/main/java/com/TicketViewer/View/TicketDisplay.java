@@ -6,13 +6,11 @@ import java.util.Map;
 
 public class TicketDisplay {
 
-    private MainPage mainPage;
     private JsonTicket jsonTicket;
 
     private static volatile TicketDisplay ticketDisplay = new TicketDisplay();
 
     private TicketDisplay(){
-        this.mainPage = MainPage.getInstance();
         this.jsonTicket = JsonTicket.getInstance();
     }
 
@@ -31,7 +29,7 @@ public class TicketDisplay {
     }
 
     public void display() {//display all attributes
-        mainPage.clearScreen();
+        Utilities.clearScreen();
         Map<String,Object> ticket = ((Map<String,Object>)jsonTicket.getTicket().get("ticket"));
 
         System.out.println("Id: " +ticket.get("id") + "\n" +
@@ -76,7 +74,6 @@ public class TicketDisplay {
                 "Channelback allowed? " + ticket.get("allow_channelback") + "\n" +
                 "Attachments allowed? " + ticket.get("allow_attachments") + "\n" +
                 "Public? " + ticket.get("is_public") + "\n");
-        mainPage.quickMenu();
     }
 
     private String formatDate(String date){

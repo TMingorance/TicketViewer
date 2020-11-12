@@ -16,6 +16,7 @@ public class MainPage {
         }
     }
     public void welcome(){
+        Utilities.clearScreen();
         System.out.println("Welcome to Ticket Viewer !\n" +
                 "           What would you like to do ?\n" +
                 "\n" +
@@ -24,12 +25,7 @@ public class MainPage {
                 "           -> Enter 'exit' quit close this program\n\n");
     }
 
-    public void quickMenu(){
+    public static void quickMenu(){
         System.out.println("a: View all tickets; d: View ticket details; quit: exit");
-    }
-
-    public void clearScreen(){
-        System.out.println("\033[H\033[2J");
-        System.out.flush();
     }
 }

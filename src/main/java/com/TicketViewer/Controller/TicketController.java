@@ -10,12 +10,11 @@ import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
 
-public class TicketController {
+public class TicketController implements Controller{
 
     private HttpConnectionHandler httpConnectionHandler;
     private JsonTicket jsonTicket;
     private TicketDisplay ticketDisplay;
-    private ErrorDisplay errorDisplay;
 
     private static volatile TicketController ticketController = new TicketController();
 
@@ -23,7 +22,6 @@ public class TicketController {
         this.httpConnectionHandler = HttpConnectionHandler.getInstance();
         this.jsonTicket = JsonTicket.getInstance();
         this.ticketDisplay = TicketDisplay.getInstance();
-        this.errorDisplay = ErrorDisplay.getInstance();
     }
 
     public TicketController(int forTest){} //Public constructor for running tests
@@ -38,8 +36,13 @@ public class TicketController {
         }
     }
 
-    public void whichTicket(){
+    public void control(String command) {
+        whichTicket();
+        MainController.setController(MainPageController.getInstance());
+        MainController.run("");
+    }
 
+    public void whichTicket(){
         ticketDisplay.whichTicket();
         parseIdInput();
     }
@@ -52,10 +55,9 @@ public class TicketController {
             id = Integer.parseInt(input);
         }
         catch(NumberFormatException e){
-            wrongIdInput();
+            ErrorManager.wrongIdInput();
         }
         ticketController.updateTicketDetails(id);
-        MainPageController.parseUserInput("");
     }
 
     private void updateTicketDetails (int id){
@@ -73,10 +75,8 @@ public class TicketController {
         ticketDisplay.display();
     }
 
-    private void wrongIdInput(){
-        errorDisplay.wrongIdInput();
-        MainPageController.parseUserInput("");
-    }
+
+
 
 
 }
