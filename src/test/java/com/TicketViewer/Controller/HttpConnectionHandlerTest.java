@@ -15,7 +15,7 @@ class HttpConnectionHandlerTest {
     private HttpConnectionHandler httpConnectionHandler = HttpConnectionHandler.getInstance();
 
     @Test
-    public void countRequestTest() throws ResourceNotFoundException, IOException, UnavailableAPIException {
+    public void countRequestTestHappyPath() throws ResourceNotFoundException, IOException, UnavailableAPIException {
         httpConnectionHandler.initConnection();
         Map<String,Object> jsonMap = httpConnectionHandler.GETJSON("https://enssat.zendesk.com/api/v2/tickets/count.json");
 
@@ -26,7 +26,7 @@ class HttpConnectionHandlerTest {
     }
 
     @Test
-    public void ticketRequestTest() throws ResourceNotFoundException, IOException, UnavailableAPIException {
+    public void ticketRequestTestHappyPath() throws ResourceNotFoundException, IOException, UnavailableAPIException {
         httpConnectionHandler.initConnection();
         Map<String,Object> jsonMap = httpConnectionHandler.GETJSON("https://enssat.zendesk.com/api/v2/tickets.json?page[size]=25");
 

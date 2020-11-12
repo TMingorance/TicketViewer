@@ -32,7 +32,6 @@
       <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-core:2.11.2" />
       <element id="library" level="project" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.11.2" />
       <element id="library" level="project" name="org.dmfs:httpurlconnection-executor:1.16.2" />
-      <element id="library" level="project" name="org.mockito:mockito-core:3.6.0" />
     </root>
   </artifact>
 </component>

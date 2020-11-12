@@ -54,7 +54,7 @@ public class TicketListController {
 
         int count = -1;
         assert jsonMap != null;
-        count = (Integer) ((Map<String,Object>)jsonMap.get("count")).get("value");
+        count = ((Integer) ((Map<String,Object>)jsonMap.get("count")).get("value")).intValue();
         if(count >=0 ) {
             ticketList.setTicketCount(count);
         }
@@ -113,10 +113,10 @@ public class TicketListController {
             ticketList.setCurrentPage(ticketList.getCurrentPage() -1);
         }
         ticketList.setList(new ArrayList<Map<String, Object>>((Collection<Map<String, Object>>) jsonMap.get("tickets")));
-        ticketList.setHasMore((Boolean) ((Map<String,Object>)jsonMap.get("meta")).get("has_more"));
+        ticketList.setHasMore(((Boolean) ((Map<String,Object>)jsonMap.get("meta")).get("has_more")).booleanValue());
         ticketListDisplay.display();
         ticketList.setPrevPageUrl((String)((Map<String,Object>)jsonMap.get("links")).get("prev"));
-        if(ticketList.isHasMore() == true){
+        if(ticketList.isHasMore()){
             ticketList.setNextPageUrl((String)((Map<String,Object>)jsonMap.get("links")).get("next"));
         }
         else{
@@ -124,7 +124,7 @@ public class TicketListController {
         }
     }
 
-    protected void parseUserInput(){
+    private void parseUserInput(){
         Scanner scanner = new Scanner(System.in);
         String input = scanner.nextLine();
         if(input.equals("n")){
@@ -151,7 +151,7 @@ public class TicketListController {
     }
     private void wrongInputPageMenu(){
         errorDisplay.wrongInputPageMenu();
-        ticketListController.parseUserInput();
+        parseUserInput();
     }
 
 }

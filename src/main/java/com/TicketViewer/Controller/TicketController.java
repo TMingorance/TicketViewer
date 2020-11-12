@@ -26,6 +26,8 @@ public class TicketController {
         this.errorDisplay = ErrorDisplay.getInstance();
     }
 
+    public TicketController(int forTest){} //Public constructor for running tests
+
     public static TicketController getInstance(){
         if(ticketController != null) {
             return ticketController;
@@ -37,6 +39,7 @@ public class TicketController {
     }
 
     public void whichTicket(){
+
         ticketDisplay.whichTicket();
         parseIdInput();
     }
@@ -55,7 +58,7 @@ public class TicketController {
         MainPageController.parseUserInput("");
     }
 
-    public void updateTicketDetails (int id){
+    private void updateTicketDetails (int id){
         Map<String, Object> jsonMap = null;
         try {
             jsonMap = httpConnectionHandler.GETJSON("https://enssat.zendesk.com/api/v2/tickets/" + id + ".json");
@@ -67,7 +70,7 @@ public class TicketController {
             ErrorManager.manageUnavailableAPIException(e.getErrorCode());
         }
         jsonTicket.setTicket(jsonMap);
-            ticketDisplay.display();
+        ticketDisplay.display();
     }
 
     private void wrongIdInput(){
