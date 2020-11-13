@@ -50,11 +50,6 @@ class TicketControllerTest {
 
     private TicketController ticketController;
 
-    @BeforeAll
-    public static void prepareTests(){
-        httpConnectionHandler.initConnection();
-    }
-
     @Test
     void whichTicketTestHappyPath() {
         ticketController = new TicketController(httpConnectionHandler,jsonTicket,ticketDisplay,errorManager);
